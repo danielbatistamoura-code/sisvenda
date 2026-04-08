@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<h2 class="mb-4"><i class="fas fa-tachometer-alt"></i> Dashboard</h2>
+
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card text-white bg-primary">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="card-title">Total de Produtos</h6>
+                        <h2 class="mb-0">{{ total_produtos }}</h2>
+                    </div>
+                    <i class="fas fa-box fa-3x"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-white bg-success">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="card-title">Total de Vendas</h6>
+                        <h2 class="mb-0">{{ total_vendas }}</h2>
+                    </div>
+                    <i class="fas fa-chart-line fa-3x"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-white bg-info">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="card-title">Valor Total em Vendas</h6>
+                        <h2 class="mb-0">R$ {{ "%.2f"|format(valor_total_vendas) }}</h2>
+                    </div>
+                    <i class="fas fa-dollar-sign fa-3x"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="fas fa-box"></i> Últimos Produtos</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Produto</th>
+                                <th>Preço</th>
+                                <th>Estoque</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for produto in ultimos_produtos %}
+                            <tr>
+                                <td>{{ produto.nome }}</td>
+                                <td>R$ {{ "%.2f"|format(produto.preco) }}</td>
+                                <td>{{ produto.quantidade }}</td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="3" class="text-center">Nenhum produto cadastrado</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="fas fa-chart-line"></i> Últimas Vendas</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Produto</th>
+                                <th>Qtd</th>
+                                <th>Total</th>
+                                <th>Data</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for venda in ultimas_vendas %}
+                            <tr>
+                                <td>{{ venda.produto_nome }}</td>
+                                <td>{{ venda.quantidade }}</td>
+                                <td>R$ {{ "%.2f"|format(venda.preco_total) }}</td>
+                                <td>{{ venda.data_venda[:10] }}</td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="4" class="text-center">Nenhuma venda registrada</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
